@@ -6,14 +6,28 @@
 /*   By: antofern <antofern@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 12:25:37 by antofern          #+#    #+#             */
-/*   Updated: 2024/03/03 21:23:19 by antofern         ###   ########.fr       */
+/*   Updated: 2024/03/04 16:40:41 by antofern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+//!!!!!!!!!!!!!!!!!!! si hay un error de lectura hay que cargarse remind (hacerle free, NULL)
+/*
+int next_read_error = 0;
+ssize_t ft_bad_read(int fd, void *buf, size_t count)
+{
+	if(!next_read_error)
+		return (read(fd, buf, count));
+	else
+	{
+		printf("[[[mala lectura]]]");
+		return (-1);
+	}
+}*/
 
 //copia buff hasta \n en line, asigna a buff "una nueva cadena con el resto". Si no hay \n setea la referencia de line a la direccion de buff, y pone buff a NULL.
 // no deberia dejar en ningun caso una cadena vacia
+
 int	pick_line(char **remind, char **line)
 {
 	char	*end_ln;
@@ -51,7 +65,7 @@ int	get_read(int fd, char **buff, char *remind)
 		*buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!*buff)
 		return (-1);
-	n = read(fd, *buff, BUFFER_SIZE);
+	n = read(fd, *buff, BUFFER_SIZE); ///////////////////////ft_bad_read
 	if (n <= 0)
 	{
 		free(*buff);

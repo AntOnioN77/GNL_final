@@ -13,6 +13,8 @@
 # include <stdlib.h>
 # include <string.h> //borra esto y cambia en el archivo .c las llamadas por ft_*
 
+extern int next_read_error;//////////////////borraesto
+
 char	*get_next_line(int fd);
 int		get_read(int fd, char **buff, char *remind);
 int		join_free(char **remind, char *buff, int read_stat);
