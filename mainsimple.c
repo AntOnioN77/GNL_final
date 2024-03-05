@@ -4,11 +4,11 @@ int main(void)
 {
 	char *str;
 	int i;
-	int fd = open("1char.txt",O_RDONLY);
+	int fd = open("variosnl.txt",O_RDONLY);
 	//close(fd);
 	//printf("%d", fd);
 	i = 0;
-	while(i < 3)
+	while(i < 7)
 	{
 		str = get_next_line(fd);
 		if (!str)

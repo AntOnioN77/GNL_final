@@ -6,12 +6,13 @@
 /*   By: antofern <antofern@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 15:04:38 by antofern          #+#    #+#             */
-/*   Updated: 2024/03/03 15:21:47 by antofern         ###   ########.fr       */
+/*   Updated: 2024/03/05 10:29:54 by antofern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+//void *er_malloc(slen * sizeof(char))
 
 size_t	ft_strlen(const char *s)
 {
