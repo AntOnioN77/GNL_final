@@ -6,7 +6,7 @@
 /*   By: antofern <antofern@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 12:25:37 by antofern          #+#    #+#             */
-/*   Updated: 2024/03/05 01:09:15 by antofern         ###   ########.fr       */
+/*   Updated: 2024/03/05 01:49:37 by antofern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,18 +82,19 @@ int	get_read(int fd, char **buff, char *remind)
 	return (0);
 }
 
-int	join_free(char **remind, char *buff, int read_stat)
+int	join_free(char **remind, char **buff, int read_stat)
 {
 	char	*tmp;
 
 	if (!*remind)
 	{
-		*remind = buff;
+		*remind = ft_strdup(*buff);
+		free_null((void **)buff);
 		return (0);
 	}
-	tmp = ft_strjoin(*remind, buff);
+	tmp = ft_strjoin(*remind, *buff);
 	if (read_stat == 1 || !tmp)
-		free(buff);
+		free(*buff);
 	if (!tmp)
 		return (-1);
 	free(*remind);
@@ -118,7 +119,7 @@ char	*get_next_line(int fd)
 		if (remind && ft_strchr(remind, '\n') && !pick_line(&remind, &line))
 			return (line);
 		read_stat = get_read(fd, &buff, remind);
-		if (read_stat >= 0 && buff && join_free(&remind, buff, read_stat))
+		if (read_stat >= 0 && buff && join_free(&remind, &buff, read_stat))
 			read_stat = -1;
 	}
 	if (read_stat >= 0 && remind)
