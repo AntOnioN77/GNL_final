@@ -6,7 +6,7 @@
 /*   By: antofern <antofern@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 12:25:37 by antofern          #+#    #+#             */
-/*   Updated: 2024/03/04 16:40:41 by antofern         ###   ########.fr       */
+/*   Updated: 2024/03/05 01:09:15 by antofern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,17 @@ ssize_t ft_bad_read(int fd, void *buf, size_t count)
 
 //copia buff hasta \n en line, asigna a buff "una nueva cadena con el resto". Si no hay \n setea la referencia de line a la direccion de buff, y pone buff a NULL.
 // no deberia dejar en ningun caso una cadena vacia
+void	free_null(void **pnt)
+{
+	free(*pnt);
+	*pnt = NULL;
+}
 
 int	pick_line(char **remind, char **line)
 {
 	char	*end_ln;
 	char	*tmp;
 
-	if (!*remind)
-		return (1);
 	tmp = NULL;
 	end_ln = ft_strchr(*remind, '\n');
 	if (!end_ln)
@@ -45,12 +48,12 @@ int	pick_line(char **remind, char **line)
 		{
 			tmp = ft_strdup(end_ln + 1);
 			if (!tmp)
-				return (1);
+				return (-1);
 		}
 		*(end_ln + 1) = '\0';
 		*line = ft_strdup(*remind);
 		if (!*line)
-			return (1);
+			return (-1);
 		free(*remind);
 	}
 	*remind = tmp;
@@ -68,8 +71,7 @@ int	get_read(int fd, char **buff, char *remind)
 	n = read(fd, *buff, BUFFER_SIZE); ///////////////////////ft_bad_read
 	if (n <= 0)
 	{
-		free(*buff);
-		*buff = NULL;
+		free_null((void **)buff);
 		if (n == 0)
 			return (1);
 		return (-1);
@@ -106,7 +108,7 @@ char	*get_next_line(int fd)
 	char		*line;
 	int			read_stat;
 
-	if (fd < 0 || fd > 255 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	buff = NULL;
 	line = NULL;
@@ -115,13 +117,13 @@ char	*get_next_line(int fd)
 	{
 		if (remind && ft_strchr(remind, '\n') && !pick_line(&remind, &line))
 			return (line);
-			//read_stat = pick_line(&remind, &line);// si hace pic mete un -2 en read state
 		read_stat = get_read(fd, &buff, remind);
 		if (read_stat >= 0 && buff && join_free(&remind, buff, read_stat))
 			read_stat = -1;
-		if (read_stat == -1)
-			return (NULL);
 	}
-	pick_line(&remind, &line);
+	if (read_stat >= 0 && remind)
+		read_stat = pick_line(&remind, &line);
+	if (read_stat == -1)
+		free_null((void **)&remind);
 	return (line);
 }
