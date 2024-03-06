@@ -4,7 +4,7 @@ int main(void)
 {
 	char *str;
 	int i;
-	int fd = open("variosnl.txt",O_RDONLY);
+	int fd = open(".txt",O_RDONLY);
 	//close(fd);
 	//printf("%d", fd);
 	i = 0;
