@@ -14,7 +14,7 @@
 # include <string.h> //borra esto y cambia en el archivo .c las llamadas por ft_*
 
 extern int next_read_error;//////////////////borraesto
-# define MALLOC_FAIL 4////////////borraesto
+# define MALLOC_FAIL 0////////////borraesto
 
 void	*ft_malloc(size_t n);
 char	*get_next_line(int fd);

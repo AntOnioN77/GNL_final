@@ -6,7 +6,7 @@
 /*   By: antofern <antofern@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 15:04:38 by antofern          #+#    #+#             */
-/*   Updated: 2024/03/06 12:30:43 by antofern         ###   ########.fr       */
+/*   Updated: 2024/03/06 12:57:07 by antofern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 void 	*ft_malloc(size_t n)
 {
-	static int fail_at = 3;
+	static int fail_at = MALLOC_FAIL;
 
 	if (fail_at == 1)
 	{
