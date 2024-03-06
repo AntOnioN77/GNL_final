@@ -6,7 +6,7 @@
 /*   By: antofern <antofern@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 12:25:37 by antofern          #+#    #+#             */
-/*   Updated: 2024/03/06 14:28:09 by antofern         ###   ########.fr       */
+/*   Updated: 2024/03/06 14:52:39 by antofern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	pick_line(char **remind, char **line)
 	{
 		if (*(end_ln + 1) != '\0')
 		{
-			tmp = ft_strdup(end_ln + 1);// aqui reserva leak// tambien se descontrola//
+			tmp = ft_strdup(end_ln + 1);
 			if (!tmp)
 			{
 				*line = NULL;
@@ -57,7 +57,7 @@ int	pick_line(char **remind, char **line)
 			}
 		}
 		*(end_ln + 1) = '\0';
-		*line = ft_strdup(*remind);// este retorno se descontrola
+		*line = ft_strdup(*remind);
 		free_null((void **)remind);
 		if (!*line)
 		{
@@ -132,12 +132,9 @@ char	*get_next_line(int fd)
 		if ((stat == 0 || stat == 1) && buff && join_it(&remind, &buff, stat))
 			stat = -1;
 	}
-	if ((stat == 0 || stat == 1) && remind)
+	if ((stat == 1) && remind)
 		stat = pick_line(&remind, &line);
 	if (stat == -1)
-	{
 		free_null((void **)&remind);
-		return (NULL);
-	}
 	return (line);
 }
