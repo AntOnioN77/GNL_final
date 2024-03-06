@@ -6,7 +6,7 @@
 /*   By: antofern <antofern@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 12:25:37 by antofern          #+#    #+#             */
-/*   Updated: 2024/03/06 11:32:37 by antofern         ###   ########.fr       */
+/*   Updated: 2024/03/06 11:36:31 by antofern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,13 @@ int	pick_line(char **remind, char **line)
 			tmp = ft_strdup(end_ln + 1);// aqui reserva leak// tambien se descontrola//
 			if (!tmp)
 			{
-				free(*remind);
+				free_null(remind);
 				return (-1);
 			}
 		}
 		*(end_ln + 1) = '\0';
 		*line = ft_strdup(*remind);// este retorno se descontrola
-		free(*remind);
+		free_null(remind);
 		if (!*line)
 			return (-1);
 	}
