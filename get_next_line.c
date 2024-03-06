@@ -6,7 +6,7 @@
 /*   By: antofern <antofern@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 12:25:37 by antofern          #+#    #+#             */
-/*   Updated: 2024/03/05 12:28:20 by antofern         ###   ########.fr       */
+/*   Updated: 2024/03/06 11:24:58 by antofern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,18 @@ int	pick_line(char **remind, char **line)
 	{
 		if (*(end_ln + 1) != '\0')
 		{
-			tmp = ft_strdup(end_ln + 1);
+			tmp = ft_strdup(end_ln + 1);// aqui reserva leak// tambien se descontrola//
 			if (!tmp)
+			{
+				free(*remind);
 				return (-1);
+			}
 		}
 		*(end_ln + 1) = '\0';
-		*line = ft_strdup(*remind);
+		*line = ft_strdup(*remind);// este retorno se descontrola
+		free(*remind);
 		if (!*line)
 			return (-1);
-		free(*remind);
 	}
 	*remind = tmp;
 	return (1);
@@ -116,15 +119,18 @@ char	*get_next_line(int fd)
 	read_stat = 0;
 	while (read_stat == 0)
 	{
-		if (remind && ft_strchr(remind, '\n') && pick_line(&remind, &line))
+		if (remind && ft_strchr(remind, '\n') && pick_line(&remind, &line))//descontrola
 			return (line);
 		read_stat = get_read(fd, &buff, remind);
 		if (read_stat >= 0 && buff && join_free(&remind, &buff, read_stat))
 			read_stat = -1;
 	}
-	if (read_stat >= 0 && remind)
+	if (read_stat > 0 && remind)
 		read_stat = pick_line(&remind, &line);
 	if (read_stat == -1)
+	{
 		free_null((void **)&remind);
+		return (NULL);
+	}
 	return (line);
 }
