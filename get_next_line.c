@@ -6,7 +6,7 @@
 /*   By: antofern <antofern@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 12:25:37 by antofern          #+#    #+#             */
-/*   Updated: 2024/03/06 11:24:58 by antofern         ###   ########.fr       */
+/*   Updated: 2024/03/06 11:32:37 by antofern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,11 @@ ssize_t ft_bad_read(int fd, void *buf, size_t count)
 // no deberia dejar en ningun caso una cadena vacia
 void	free_null(void **pnt)
 {
-	free(*pnt);
-	*pnt = NULL;
+	if (*pnt)
+	{
+		free(*pnt);
+		*pnt = NULL;
+	}
 }
 
 int	pick_line(char **remind, char **line)
