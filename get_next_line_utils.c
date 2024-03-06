@@ -6,13 +6,30 @@
 /*   By: antofern <antofern@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 15:04:38 by antofern          #+#    #+#             */
-/*   Updated: 2024/03/05 10:29:54 by antofern         ###   ########.fr       */
+/*   Updated: 2024/03/06 12:30:43 by antofern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
 //void *er_malloc(slen * sizeof(char))
+
+void 	*ft_malloc(size_t n)
+{
+	static int fail_at = 3;
+
+	if (fail_at == 1)
+	{
+		fail_at = 0;
+		return  (NULL);
+	}
+	else
+	{
+		fail_at--;
+		return(malloc(n));
+	}
+
+}
 
 size_t	ft_strlen(const char *s)
 {
@@ -71,7 +88,7 @@ char	*ft_strdup(const char *s1)
 
 	i = 0;
 	slen = ft_strlen(s1) + 1;
-	new = (char *)malloc(slen * sizeof(char)); //era calloc, funciona con malloc?!!
+	new = (char *)ft_malloc(slen * sizeof(char)); //era calloc, funciona con malloc?!!
 	if (new == NULL)
 		return (NULL);
 	while (s1[i])
@@ -93,7 +110,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	s1size = ft_strlen(s1);
 	s2size = ft_strlen(s2);
-	newstr = (char *)malloc(sizeof(char) * (s1size + s2size + 1));
+	newstr = (char *)ft_malloc(sizeof(char) * (s1size + s2size + 1));
 	if (newstr == NULL)
 		return (NULL);
 	ft_strlcpy(newstr, s1, s1size + 1);

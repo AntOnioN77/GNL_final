@@ -6,7 +6,7 @@
 /*   By: antofern <antofern@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 12:25:37 by antofern          #+#    #+#             */
-/*   Updated: 2024/03/06 11:38:08 by antofern         ###   ########.fr       */
+/*   Updated: 2024/03/06 12:09:22 by antofern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	get_read(int fd, char **buff, char *remind)
 	ssize_t	n;
 
 	if (!*buff || *buff == remind)
-		*buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+		*buff = (char *)ft_malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!*buff)
 		return (-1);
 	n = read(fd, *buff, BUFFER_SIZE); ///////////////////////ft_bad_read
