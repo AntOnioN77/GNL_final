@@ -6,7 +6,7 @@
 /*   By: antofern <antofern@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 12:25:37 by antofern          #+#    #+#             */
-/*   Updated: 2024/03/06 14:52:39 by antofern         ###   ########.fr       */
+/*   Updated: 2024/03/06 15:03:04 by antofern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,7 @@ int	pick_line(char **remind, char **line)
 		{
 			tmp = ft_strdup(end_ln + 1);
 			if (!tmp)
-			{
-				*line = NULL;
 				return (-1);
-			}
 		}
 		*(end_ln + 1) = '\0';
 		*line = ft_strdup(*remind);
@@ -77,7 +74,7 @@ int	get_read(int fd, char **buff, char *remind)
 		*buff = (char *)ft_malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!*buff)
 		return (-1);
-	n = read(fd, *buff, BUFFER_SIZE); ///////////////////////ft_bad_read
+	n = read(fd, *buff, BUFFER_SIZE);
 	if (n <= 0)
 	{
 		free_null((void **)buff);
