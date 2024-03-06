@@ -6,7 +6,7 @@
 /*   By: antofern <antofern@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 12:25:37 by antofern          #+#    #+#             */
-/*   Updated: 2024/03/06 13:35:41 by antofern         ###   ########.fr       */
+/*   Updated: 2024/03/06 14:28:09 by antofern         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	pick_line(char **remind, char **line)
 		}
 	}
 	*remind = tmp;
-	return (1);
+	return (2);
 }
 
 int	get_read(int fd, char **buff, char *remind)
@@ -91,7 +91,7 @@ int	get_read(int fd, char **buff, char *remind)
 	return (0);
 }
 
-int	join_free(char **remind, char **buff, int read_stat)
+int	join_it(char **remind, char **buff, int stat)
 {
 	char	*tmp;
 
@@ -102,7 +102,7 @@ int	join_free(char **remind, char **buff, int read_stat)
 		return (0);
 	}
 	tmp = ft_strjoin(*remind, *buff);
-	if (read_stat == 1 || !tmp)
+	if (stat == 1 || !tmp)
 		free(*buff);
 	if (!tmp)
 		return (-1);
@@ -116,24 +116,25 @@ char	*get_next_line(int fd)
 	char		*buff;
 	static char	*remind;
 	char		*line;
-	int			read_stat;
+	int			stat;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	buff = NULL;
 	line = NULL;
-	read_stat = 0;
-	while (read_stat == 0)
+	stat = 0;
+	while (stat == 0)
 	{
-		if (remind && ft_strchr(remind, '\n') && pick_line(&remind, &line))//descontrola
-			return (line);
-		read_stat = get_read(fd, &buff, remind);
-		if (read_stat >= 0 && buff && join_free(&remind, &buff, read_stat))
-			read_stat = -1;
+		if (remind && ft_strchr(remind, '\n'))
+			stat = pick_line(&remind, &line);
+		if (stat == 0)
+			stat = get_read(fd, &buff, remind);
+		if ((stat == 0 || stat == 1) && buff && join_it(&remind, &buff, stat))
+			stat = -1;
 	}
-	if (read_stat > 0 && remind)
-		read_stat = pick_line(&remind, &line);
-	if (read_stat == -1)
+	if ((stat == 0 || stat == 1) && remind)
+		stat = pick_line(&remind, &line);
+	if (stat == -1)
 	{
 		free_null((void **)&remind);
 		return (NULL);
